@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
 
 import RenderingPuzzle01 from './topics/01-rendering-puzzles/Puzzle01';
 import RenderingPuzzle02 from './topics/01-rendering-puzzles/Puzzle02';
@@ -73,81 +73,8 @@ function TopicLayout({ title, puzzles }: { title: string; puzzles: { component: 
         ))}
       </div>
       
-      <Routes>
-        {puzzles.map((puzzle, idx) => (
-          <Route key={idx} path={puzzle.path} element={<puzzle.component />} />
-        ))}
-        <Route path="/" element={
-          <div>
-            <h3>Select a puzzle to practice:</h3>
-            {puzzles.map((puzzle, idx) => (
-              <div key={idx} style={{ margin: '10px 0' }}>
-                <Link to={puzzle.path}>Puzzle{idx + 1}</Link>
-              </div>
-            ))}
-          </div>
-        } />
-      </Routes>
+      <Outlet />
     </div>
-  );
-}
-
-function RenderingPuzzles() {
-  return (
-    <TopicLayout 
-      title="01 Rendering Puzzles" 
-      puzzles={[
-        { component: RenderingPuzzle01, path: '/puzzle01' },
-        { component: RenderingPuzzle02, path: '/puzzle02' },
-      ]}
-    />
-  );
-}
-
-function UseEffectPuzzles() {
-  return (
-    <TopicLayout 
-      title="02 useEffect Lifecycle" 
-      puzzles={[
-        { component: UseEffectPuzzle01, path: '/puzzle01' },
-        { component: UseEffectPuzzle02, path: '/puzzle02' },
-      ]}
-    />
-  );
-}
-
-function HooksAdvanced() {
-  return (
-    <TopicLayout 
-      title="03 Hooks Advanced" 
-      puzzles={[
-        { component: HooksPuzzle01, path: '/puzzle01' },
-        { component: HooksPuzzle02, path: '/puzzle02' },
-      ]}
-    />
-  );
-}
-
-function PerformancePuzzles() {
-  return (
-    <TopicLayout 
-      title="04 Performance" 
-      puzzles={[
-        { component: PerformancePuzzle01, path: '/puzzle01' },
-        { component: PerformancePuzzle02, path: '/puzzle02' },
-      ]}
-    />
-  );
-}
-
-function RefsAndDom() {
-  return (
-    <TopicLayout 
-      title="05 Refs and DOM" 
-      puzzles={[
-        { component: RefsPuzzle01, path: '/puzzle01' },
-      ]}
-    />
   );
 }
 
@@ -156,11 +83,73 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/topics/01-rendering-puzzles/*" element={<RenderingPuzzles />} />
-        <Route path="/topics/02-useEffect-lifecycle/*" element={<UseEffectPuzzles />} />
-        <Route path="/topics/03-hooks-advanced/*" element={<HooksAdvanced />} />
-        <Route path="/topics/04-performance/*" element={<PerformancePuzzles />} />
-        <Route path="/topics/05-refs-and-dom/*" element={<RefsAndDom />} />
+        <Route path="/topics/01-rendering-puzzles" element={<TopicLayout title="01 Rendering Puzzles" puzzles={[
+          { component: RenderingPuzzle01, path: 'puzzle01' },
+          { component: RenderingPuzzle02, path: 'puzzle02' },
+        ]} />}>
+          <Route index element={
+            <div>
+              <h3>Select a puzzle to practice:</h3>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle01">Puzzle1</Link></div>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle02">Puzzle2</Link></div>
+            </div>
+          } />
+          <Route path="puzzle01" element={<RenderingPuzzle01 />} />
+          <Route path="puzzle02" element={<RenderingPuzzle02 />} />
+        </Route>
+        <Route path="/topics/02-useEffect-lifecycle" element={<TopicLayout title="02 useEffect Lifecycle" puzzles={[
+          { component: UseEffectPuzzle01, path: 'puzzle01' },
+          { component: UseEffectPuzzle02, path: 'puzzle02' },
+        ]} />}>
+          <Route index element={
+            <div>
+              <h3>Select a puzzle to practice:</h3>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle01">Puzzle1</Link></div>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle02">Puzzle2</Link></div>
+            </div>
+          } />
+          <Route path="puzzle01" element={<UseEffectPuzzle01 />} />
+          <Route path="puzzle02" element={<UseEffectPuzzle02 />} />
+        </Route>
+        <Route path="/topics/03-hooks-advanced" element={<TopicLayout title="03 Hooks Advanced" puzzles={[
+          { component: HooksPuzzle01, path: 'puzzle01' },
+          { component: HooksPuzzle02, path: 'puzzle02' },
+        ]} />}>
+          <Route index element={
+            <div>
+              <h3>Select a puzzle to practice:</h3>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle01">Puzzle1</Link></div>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle02">Puzzle2</Link></div>
+            </div>
+          } />
+          <Route path="puzzle01" element={<HooksPuzzle01 />} />
+          <Route path="puzzle02" element={<HooksPuzzle02 />} />
+        </Route>
+        <Route path="/topics/04-performance" element={<TopicLayout title="04 Performance" puzzles={[
+          { component: PerformancePuzzle01, path: 'puzzle01' },
+          { component: PerformancePuzzle02, path: 'puzzle02' },
+        ]} />}>
+          <Route index element={
+            <div>
+              <h3>Select a puzzle to practice:</h3>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle01">Puzzle1</Link></div>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle02">Puzzle2</Link></div>
+            </div>
+          } />
+          <Route path="puzzle01" element={<PerformancePuzzle01 />} />
+          <Route path="puzzle02" element={<PerformancePuzzle02 />} />
+        </Route>
+        <Route path="/topics/05-refs-and-dom" element={<TopicLayout title="05 Refs and DOM" puzzles={[
+          { component: RefsPuzzle01, path: 'puzzle01' },
+        ]} />}>
+          <Route index element={
+            <div>
+              <h3>Select a puzzle to practice:</h3>
+              <div style={{ margin: '10px 0' }}><Link to="puzzle01">Puzzle1</Link></div>
+            </div>
+          } />
+          <Route path="puzzle01" element={<RefsPuzzle01 />} />
+        </Route>
         <Route path="/challenges/01-stopwatch" element={<Stopwatch />} />
         <Route path="/challenges/02-todo-list" element={<TodoList />} />
         <Route path="/challenges/03-star-rating" element={<StarRating />} />
